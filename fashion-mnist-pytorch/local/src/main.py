@@ -30,9 +30,9 @@ labels_map = {
     9: 'Ankle Boot',
 }
 
-DATA_DIRPATH = 'fashion-mnist/fashion-pytorch/data'
-MODEL_DIRPATH = 'fashion-mnist/fashion-pytorch/outputs'
-IMAGE_FILEPATH = 'fashion-mnist/fashion-pytorch/src/predict-image.png'
+DATA_DIRPATH = 'fashion-mnist-pytorch/local/data'
+MODEL_DIRPATH = 'fashion-mnist-pytorch/local/outputs'
+IMAGE_FILEPATH = 'fashion-mnist-pytorch/local/src/predict-image.png'
 
 
 def _get_data(batch_size: int) -> Tuple[DataLoader, DataLoader]:
@@ -58,23 +58,6 @@ def _get_data(batch_size: int) -> Tuple[DataLoader, DataLoader]:
     test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
 
     return (train_dataloader, test_dataloader)
-
-
-def _visualize_data(dataloader: DataLoader) -> None:
-    """Displays a few images from the DataLoader object passed as a
-    parameter."""
-    dataset = dataloader.dataset
-    figure = plt.figure(figsize=(8, 8))
-    cols = 3
-    rows = 3
-    for i in range(1, cols * rows + 1):
-        sample_idx = random.randint(0, len(dataset))
-        (image, label) = dataset[sample_idx]
-        figure.add_subplot(rows, cols, i)
-        plt.title(labels_map[label])
-        plt.axis('off')
-        plt.imshow(image.squeeze(), cmap='gray')
-    plt.show()
 
 
 def _fit(device: str, dataloader: DataLoader, model: nn.Module,
@@ -176,10 +159,8 @@ def training_phase(device: str):
     epochs = 5
 
     (train_dataloader, test_dataloader) = _get_data(batch_size)
-    # _visualize_data(train_dataloader)
 
     model = NeuralNetwork()
-    # print(model)
 
     loss_fn = nn.CrossEntropyLoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
