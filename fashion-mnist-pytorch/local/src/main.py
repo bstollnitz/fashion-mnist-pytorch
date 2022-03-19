@@ -1,10 +1,8 @@
 """Training, evaluation, and prediction."""
 
-import random
 from pathlib import Path
 from typing import Tuple
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 from PIL import Image
