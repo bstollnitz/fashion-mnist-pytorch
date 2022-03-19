@@ -2,8 +2,6 @@
 
 For a detailed explanation of the code, check out the accompanying blog post: [Creating managed online endpoints in Azure ML](https://bea.stollnitz.com/blog/managed-endpoint/).
 
-I've included in the project all the folders created when running the code (`pytorch-model`, `tf-model`, and `sample-request`). Therefore you don't need to build and run the code &mdash; you can go straight to working with the endpoints!
-
 You can find below the steps needed to create and invoke the endpoints in this project.
 
 
@@ -23,72 +21,42 @@ You can find below the steps needed to create and invoke the endpoints in this p
 * Although not essential to run the code in this post, I highly recommend installing the [Azure Machine Learning extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-ai).
 
 
-## Create the models
+## Create the model
 
 Execute the following commands:
 
 ```
-az ml model create -f fashion-mnist/managed-endpoint/cloud/model-pytorch-fashion.yml
-az ml model create -f fashion-mnist/managed-endpoint/cloud/model-tf-fashion.yml
+az ml model create -f cloud/model-pt-managed-fashion.yml
 ```
 
 
 ## Create and invoke endpoints
 
-Execute the following commands, replacing `endpoint-managed-fashion-X` with names you choose for your endpoints.
+Execute the following commands, replacing `endpoint-pt-managed-fashion-X` with names you choose for your endpoints.
 
 
 ### Endpoint 1
 
 ```
-az ml online-endpoint create -f fashion-mnist/managed-endpoint/cloud/endpoint-1/endpoint.yml --name endpoint-managed-fashion-1
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-1/deployment.yml --endpoint-name endpoint-managed-fashion-1 --all-traffic
-az ml online-endpoint invoke -n endpoint-managed-fashion-1 --request-file fashion-mnist/managed-endpoint/sample-request/sample_request.json
+az ml online-endpoint create -f cloud/endpoint-1/endpoint.yml --name endpoint-pt-managed-fashion-1
+az ml online-deployment create -f cloud/endpoint-1/deployment.yml --all-traffic --endpoint-name endpoint-pt-managed-fashion-1
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n endpoint-pt-managed-fashion-1
 ```
 
 
 ### Endpoint 2
 
 ```
-az ml online-endpoint create -f fashion-mnist/managed-endpoint/cloud/endpoint-2/endpoint.yml --name endpoint-managed-fashion-2
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-2/deployment.yml --endpoint-name endpoint-managed-fashion-2 --all-traffic
-az ml online-endpoint invoke -n endpoint-managed-fashion-2 --request-file fashion-mnist/managed-endpoint/sample-request/sample_request.json
+az ml online-endpoint create -f cloud/endpoint-2/endpoint.yml --name endpoint-pt-managed-fashion-2
+az ml online-deployment create -f cloud/endpoint-2/deployment.yml --all-traffic --endpoint-name endpoint-pt-managed-fashion-2
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n endpoint-pt-managed-fashion-2
 ```
 
 
 ### Endpoint 3
 
 ```
-az ml online-endpoint create -f fashion-mnist/managed-endpoint/cloud/endpoint-3/endpoint.yml --name endpoint-managed-fashion-3
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-3/deployment.yml --endpoint-name endpoint-managed-fashion-3 --all-traffic
-az ml online-endpoint invoke -n endpoint-managed-fashion-3 --request-file fashion-mnist/managed-endpoint/sample-request/sample_request.json
-```
-
-
-### Endpoint 4
-
-```
-az ml online-endpoint create -f fashion-mnist/managed-endpoint/cloud/endpoint-4/endpoint.yml --name endpoint-managed-fashion-4
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-4/deployment.yml --endpoint-name endpoint-managed-fashion-4 --all-traffic
-az ml online-endpoint invoke -n endpoint-managed-fashion-4 --request-file fashion-mnist/managed-endpoint/sample-request/sample_request.json
-```
-
-
-### Endpoint 5
-
-```
-az ml online-endpoint create -f fashion-mnist/managed-endpoint/cloud/endpoint-5/endpoint.yml --name endpoint-managed-fashion-5
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-5/deployment.yml --endpoint-name endpoint-managed-fashion-5 --all-traffic
-az ml online-endpoint invoke -n endpoint-managed-fashion-5 --request-file fashion-mnist/managed-endpoint/sample-request/sample_request.json
-```
-
-
-### Endpoint 6
-
-```
-az ml online-endpoint create -f fashion-mnist/managed-endpoint/cloud/endpoint-6/endpoint.yml --name endpoint-managed-fashion-6
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-6/deployment-blue.yml --endpoint-name endpoint-managed-fashion-6 --all-traffic
-az ml online-deployment create -f fashion-mnist/managed-endpoint/cloud/endpoint-6/deployment-green.yml --endpoint-name endpoint-managed-fashion-6
-az ml online-endpoint update --name endpoint-managed-fashion-6 --traffic "blue=90 green=10"
-az ml online-endpoint invoke -n endpoint-managed-fashion-6 --request-file fashion-mnist/managed-endpoint/sample-request/sample_request.json
+az ml online-endpoint create -f endpoint-3/endpoint.yml --name endpoint-pt-managed-fashion-3
+az ml online-deployment create -f cloud/endpoint-3/deployment.yml --all-traffic --endpoint-name endpoint-pt-managed-fashion-3
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n endpoint-pt-managed-fashion-3
 ```

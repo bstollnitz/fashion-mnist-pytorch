@@ -6,8 +6,8 @@ from pathlib import Path
 
 from train import _get_data
 
-DATA_PATH = 'fashion-mnist/managed-endpoint/data'
-SAMPLE_REQUEST = 'fashion-mnist/managed-endpoint/sample-request'
+DATA_PATH = 'fashion-mnist-pytorch/aml-managed-endpoint/data'
+SAMPLE_REQUEST = 'fashion-mnist-pytorch/aml-managed-endpoint/sample-request'
 
 
 def create_sample_request() -> None:

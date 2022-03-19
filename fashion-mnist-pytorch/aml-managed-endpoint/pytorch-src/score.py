@@ -23,10 +23,15 @@ labels_map = {
     9: 'Ankle Boot',
 }
 
+REQUEST_DIRPATH = 'aml-managed-endpoint/sample-request/sample_request.json'
 
-def predict(model: nn.Module, x: Tensor) -> torch.Tensor:
+model = None
+device = None
+
+
+def predict(trained_model: nn.Module, x: Tensor) -> torch.Tensor:
     with torch.no_grad():
-        y_prime = model(x)
+        y_prime = trained_model(x)
         probabilities = nn.functional.softmax(y_prime, dim=1)
         predicted_indices = probabilities.argmax(1)
     return predicted_indices
@@ -64,11 +69,3 @@ def run(raw_data):
 
     logging.info('Run completed')
     return predicted_name
-
-
-if __name__ == '__main__':
-    init()
-    with open('managed-endpoint/sample-request/sample_request.json',
-              encoding='utf-8') as file:
-        raw_data = file.read()
-    print(run(raw_data))
