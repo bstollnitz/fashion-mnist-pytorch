@@ -23,8 +23,6 @@ labels_map = {
     9: 'Ankle Boot',
 }
 
-REQUEST_DIRPATH = 'aml-managed-endpoint/sample-request/sample_request.json'
-
 model = None
 device = None
 
