@@ -1,11 +1,11 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
-endpoint_name: endpoint-pt-managed-fashion-1
+endpoint_name: endpoint-pt-managed-fashion-4
 model: azureml:model-pt-managed-fashion-1:1
 code_configuration:
   code:
     local_path: ../../pytorch-src-1/
   scoring_script: score.py
-environment: azureml:AzureML-pytorch-1.7-ubuntu18.04-py37-cpu-inference:11
+environment: azureml:AzureML-tensorflow-2.4-ubuntu18.04-py37-cpu-inference:11
 instance_type: Standard_DS3_v2
 instance_count: 1

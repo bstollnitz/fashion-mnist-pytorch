@@ -4,7 +4,7 @@ endpoint_name: endpoint-pt-managed-fashion-2
 model: azureml:model-pt-managed-fashion-1:1
 code_configuration:
   code:
-    local_path: ../../pytorch-src/
+    local_path: ../../pytorch-src-1/
   scoring_script: score.py
 environment:
   conda_file: score-conda.yml

@@ -4,7 +4,7 @@ endpoint_name: endpoint-pt-managed-fashion-3
 model: azureml:model-pt-managed-fashion-1:1
 code_configuration:
   code:
-    local_path: ../../pytorch-src/
+    local_path: ../../pytorch-src-1/
   scoring_script: score.py
 environment: azureml:AzureML-pytorch-1.7-ubuntu18.04-py37-cpu-inference:11
 instance_type: Standard_DS3_v2
