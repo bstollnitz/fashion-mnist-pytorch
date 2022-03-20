@@ -45,7 +45,7 @@ Execute the following commands, replacing `<ENDPOINT>` with the name you choose 
 
 ```
 az ml batch-endpoint create -f cloud/endpoint/endpoint.yml --name <ENDPOINT>
-az ml batch-deployment create -f cloud/endpoint/deployment.yml --set-default
+az ml batch-deployment create -f cloud/endpoint/deployment.yml --set-default --endpoint-name <ENDPOINT>
 ```
 
 
