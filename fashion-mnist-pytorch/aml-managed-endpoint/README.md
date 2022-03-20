@@ -33,17 +33,32 @@ az ml model create -f cloud/model-2.yml
 
 ## Create and invoke endpoints
 
-Execute the following commands, replacing `<ENDPOINTX>` with name you choose for your endpoint.
+Execute the following commands, replacing `<ENDPOINTX>` with the name you choose for each endpoint.
 
 
-### Endpoints 1, 2, and 3
+### Endpoint 1
 
 ```
-az ml online-endpoint create -f cloud/endpoint-1/endpoint.yml --name <ENDPOINTX>
-az ml online-deployment create -f cloud/endpoint-1/deployment.yml --all-traffic --endpoint-name <ENDPOINTX>
-az ml online-endpoint invoke --request-file sample-request/sample_request.json -n <ENDPOINTX>
+az ml online-endpoint create -f cloud/endpoint-1/endpoint.yml --name <ENDPOINT1>
+az ml online-deployment create -f cloud/endpoint-1/deployment.yml --all-traffic --endpoint-name <ENDPOINT1>
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n <ENDPOINT1>
 ```
 
+### Endpoint 2
+
+```
+az ml online-endpoint create -f cloud/endpoint-2/endpoint.yml --name <ENDPOINT2>
+az ml online-deployment create -f cloud/endpoint-2/deployment.yml --all-traffic --endpoint-name <ENDPOINT2>
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n <ENDPOINT2>
+```
+
+### Endpoint 3
+
+```
+az ml online-endpoint create -f cloud/endpoint-3/endpoint.yml --name <ENDPOINT3>
+az ml online-deployment create -f cloud/endpoint-3/deployment.yml --all-traffic --endpoint-name <ENDPOINT3>
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n <ENDPOINT3>
+```
 
 ### Endpoint 4
 
