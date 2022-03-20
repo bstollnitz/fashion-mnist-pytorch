@@ -21,42 +21,36 @@ You can find below the steps needed to create and invoke the endpoints in this p
 * Although not essential to run the code in this post, I highly recommend installing the [Azure Machine Learning extension for VS Code](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.vscode-ai).
 
 
-## Create the model
+## Create the models
 
 Execute the following commands:
 
 ```
-az ml model create -f cloud/model-pt-managed-fashion.yml
+az ml model create -f cloud/model-1.yml
+az ml model create -f cloud/model-2.yml
 ```
 
 
 ## Create and invoke endpoints
 
-Execute the following commands, replacing `endpoint-pt-managed-fashion-X` with names you choose for your endpoints.
+Execute the following commands, replacing `<ENDPOINTX>` with name you choose for your endpoint.
 
 
-### Endpoint 1
-
-```
-az ml online-endpoint create -f cloud/endpoint-1/endpoint.yml --name endpoint-pt-managed-fashion-1
-az ml online-deployment create -f cloud/endpoint-1/deployment.yml --all-traffic --endpoint-name endpoint-pt-managed-fashion-1
-az ml online-endpoint invoke --request-file sample-request/sample_request.json -n endpoint-pt-managed-fashion-1
-```
-
-
-### Endpoint 2
+### Endpoint 1, 2, and 3
 
 ```
-az ml online-endpoint create -f cloud/endpoint-2/endpoint.yml --name endpoint-pt-managed-fashion-2
-az ml online-deployment create -f cloud/endpoint-2/deployment.yml --all-traffic --endpoint-name endpoint-pt-managed-fashion-2
-az ml online-endpoint invoke --request-file sample-request/sample_request.json -n endpoint-pt-managed-fashion-2
+az ml online-endpoint create -f cloud/endpoint-1/endpoint.yml --name <ENDPOINTX>
+az ml online-deployment create -f cloud/endpoint-1/deployment.yml --all-traffic --endpoint-name <ENDPOINTX>
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n <ENDPOINTX>
 ```
 
 
-### Endpoint 3
+### Endpoint 4
 
 ```
-az ml online-endpoint create -f endpoint-3/endpoint.yml --name endpoint-pt-managed-fashion-3
-az ml online-deployment create -f cloud/endpoint-3/deployment.yml --all-traffic --endpoint-name endpoint-pt-managed-fashion-3
-az ml online-endpoint invoke --request-file sample-request/sample_request.json -n endpoint-pt-managed-fashion-3
+az ml online-endpoint create -f cloud/endpoint-4/endpoint.yml --name <ENDPOINT4>
+az ml online-deployment create -f cloud/endpoint-4/deployment-blue.yml --all-traffic --endpoint-name <ENDPOINT4>
+az ml online-deployment create -f cloud/endpoint-4/deployment-green.yml --endpoint-name <ENDPOINT4>
+az ml online-endpoint update --name <ENDPOINT4> --traffic "blue=90 green=10"
+az ml online-endpoint invoke --request-file sample-request/sample_request.json -n <ENDPOINT4>
 ```
