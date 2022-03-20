@@ -36,7 +36,7 @@ az ml model create -f cloud/model-2.yml
 Execute the following commands, replacing `<ENDPOINTX>` with name you choose for your endpoint.
 
 
-### Endpoint 1, 2, and 3
+### Endpoints 1, 2, and 3
 
 ```
 az ml online-endpoint create -f cloud/endpoint-1/endpoint.yml --name <ENDPOINTX>
