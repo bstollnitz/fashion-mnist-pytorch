@@ -3,8 +3,8 @@
 from torchvision import datasets
 import os
 
-DATA_PATH = 'fashion-mnist/batch-endpoint/data'
-SAMPLE_REQUEST = 'fashion-mnist/batch-endpoint/sample-request'
+DATA_PATH = 'fashion-mnist-pytorch/aml-batch-endpoint/data'
+SAMPLE_REQUEST = 'fashion-mnist-pytorch/aml-batch-endpoint/sample-request'
 
 
 def main() -> None:

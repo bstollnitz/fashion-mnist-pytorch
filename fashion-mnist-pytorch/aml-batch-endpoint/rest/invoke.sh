@@ -1,5 +1,5 @@
-ENDPOINT_NAME=endpoint-batch-fashion-1
-DATASET_NAME=dataset-input-batch-fashion
+ENDPOINT_NAME=endpoint-pt-batch-fashion
+DATASET_NAME=dataset-invoke-batch-fashion
 DATASET_VERSION=1
 
 SUBSCRIPTION_ID=$(az account show --query id | tr -d '\r"')

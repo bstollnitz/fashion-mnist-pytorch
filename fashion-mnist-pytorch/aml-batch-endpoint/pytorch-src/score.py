@@ -24,10 +24,14 @@ labels_map = {
     9: 'Ankle Boot',
 }
 
+logger = None
+model = None
+device = None
 
-def predict(model: nn.Module, x: Tensor) -> torch.Tensor:
+
+def predict(trained_model: nn.Module, x: Tensor) -> torch.Tensor:
     with torch.no_grad():
-        y_prime = model(x)
+        y_prime = trained_model(x)
         probabilities = nn.functional.softmax(y_prime, dim=1)
         predicted_indices = probabilities.argmax(1)
     return predicted_indices

@@ -26,8 +26,8 @@ labels_map = {
     9: 'Ankle Boot',
 }
 
-DATA_DIRPATH = 'fashion-mnist/batch-endpoint/data'
-MODEL_DIRPATH = 'fashion-mnist/batch-endpoint/pytorch-model'
+DATA_DIRPATH = 'fashion-mnist-pytorch/aml-batch-endpoint/data'
+MODEL_DIRPATH = 'fashion-mnist-pytorch/aml-batch-endpoint/pytorch-model'
 
 
 def _get_data(batch_size: int) -> Tuple[DataLoader, DataLoader]:
