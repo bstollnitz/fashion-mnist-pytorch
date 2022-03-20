@@ -10,5 +10,5 @@ OUTPUT=$(curl --location \
      --request POST $SCORING_URI \
      --header "Authorization: Bearer $PRIMARY_KEY" \
      --header "Content-Type: application/json" \
-     --data @../sample-request/sample_request.json)
+     --data @sample-request/sample_request.json)
 echo "OUTPUT: $OUTPUT"

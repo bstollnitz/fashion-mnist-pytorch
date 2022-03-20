@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/model.schema.json
+name: model-pt-managed-fashion-1
+version: 1
+# To register a model, specify the local path for the saved model
+local_path: "../pytorch-model-1/weights.pth"
