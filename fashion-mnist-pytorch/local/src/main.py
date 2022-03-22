@@ -29,7 +29,7 @@ labels_map = {
 }
 
 DATA_DIRPATH = 'fashion-mnist-pytorch/local/data'
-MODEL_DIRPATH = 'fashion-mnist-pytorch/local/outputs'
+MODEL_DIRPATH = 'fashion-mnist-pytorch/local/model'
 IMAGE_FILEPATH = 'fashion-mnist-pytorch/local/src/predict-image.png'
 
 
