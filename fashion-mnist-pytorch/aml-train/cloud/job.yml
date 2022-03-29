@@ -7,6 +7,6 @@ inputs:
     dataset: azureml:dataset-fashion-mnist:1
 outputs:
   trained_model:
-    mode: upload
-environment: azureml:AzureML-pytorch-1.7-ubuntu18.04-py37-cpu-inference:33
+    mode: mount
+environment: azureml:AzureML-pytorch-1.10-ubuntu18.04-py38-cuda11-gpu:16
 compute: azureml:cluster-cpu
