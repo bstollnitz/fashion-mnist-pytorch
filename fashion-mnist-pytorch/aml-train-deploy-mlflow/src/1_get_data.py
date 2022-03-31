@@ -36,6 +36,7 @@ def main() -> None:
     parser.add_argument("--data_dir", dest="data_dir", default=DATA_DIR)
     args = parser.parse_args()
     data_dir = args.data_dir
+    logging.info("data_dir: %s", data_dir)
     _save_data(data_dir)
 
 
