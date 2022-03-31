@@ -187,9 +187,9 @@ def main() -> None:
     parser.add_argument("--model_dir", dest="model_dir", default=MODEL_DIR)
     args = parser.parse_args()
     data_dir = args.data_dir
-    logging.info("data_dir: " + data_dir)
+    logging.info("data_dir: %s", data_dir)
     model_dir = args.model_dir
-    logging.info("model_dir: " + model_dir)
+    logging.info("model_dir: %s", model_dir)
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     training_phase(data_dir, model_dir, device)
