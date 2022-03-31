@@ -4,18 +4,16 @@ import argparse
 import logging
 from pathlib import Path
 from typing import Tuple
-from tqdm import tqdm
 
 import torch
 from torch import nn
-from torch.nn.modules.loss import CrossEntropyLoss
-from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
 
 from common import DATA_DIR, MODEL_DIR
 from neural_network import NeuralNetwork
+from utils_train_nn import fit, evaluate
 
 
 def _load_data(data_dir: str, batch_size: int) -> Tuple[DataLoader, DataLoader]:
@@ -49,93 +47,6 @@ def _save_model(model_dir, model: nn.Module) -> None:
     torch.save(model.state_dict(), path)
 
 
-def _fit(device: str, dataloader: DataLoader, model: nn.Module,
-         loss_fn: CrossEntropyLoss,
-         optimizer: Optimizer) -> Tuple[float, float]:
-    """
-    Trains the given model for a single epoch.
-    """
-    loss_sum = 0
-    correct_item_count = 0
-    item_count = 0
-
-    model.to(device)
-    model.train()
-
-    for (x, y) in tqdm(dataloader):
-        x = x.float().to(device)
-        y = y.long().to(device)
-
-        (y_prime, loss) = _fit_one_batch(x, y, model, loss_fn, optimizer)
-
-        correct_item_count += (y_prime.argmax(1) == y).sum().item()
-        loss_sum += loss.item()
-        item_count += len(x)
-
-    average_loss = loss_sum / item_count
-    accuracy = correct_item_count / item_count
-
-    return (average_loss, accuracy)
-
-
-def _fit_one_batch(x: torch.Tensor, y: torch.Tensor, model: NeuralNetwork,
-                   loss_fn: CrossEntropyLoss,
-                   optimizer: Optimizer) -> Tuple[torch.Tensor, torch.Tensor]:
-    """
-    Trains a single minibatch (backpropagation algorithm).
-    """
-    y_prime = model(x)
-    loss = loss_fn(y_prime, y)
-
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
-
-    return (y_prime, loss)
-
-
-def _evaluate(device: str, dataloader: DataLoader, model: nn.Module,
-              loss_fn: CrossEntropyLoss) -> Tuple[float, float]:
-    """
-    Evaluates the given model for the whole dataset once.
-    """
-    loss_sum = 0
-    correct_item_count = 0
-    item_count = 0
-
-    model.to(device)
-    model.eval()
-
-    with torch.no_grad():
-        for (x, y) in dataloader:
-            x = x.float().to(device)
-            y = y.long().to(device)
-
-            (y_prime, loss) = _evaluate_one_batch(x, y, model, loss_fn)
-
-            correct_item_count += (y_prime.argmax(1) == y).sum().item()
-            loss_sum += loss.item()
-            item_count += len(x)
-
-        average_loss = loss_sum / item_count
-        accuracy = correct_item_count / item_count
-
-    return (average_loss, accuracy)
-
-
-def _evaluate_one_batch(
-        x: torch.tensor, y: torch.tensor, model: NeuralNetwork,
-        loss_fn: CrossEntropyLoss) -> Tuple[torch.Tensor, torch.Tensor]:
-    """
-    Evaluates a single minibatch.
-    """
-    with torch.no_grad():
-        y_prime = model(x)
-        loss = loss_fn(y_prime, y)
-
-    return (y_prime, loss)
-
-
 def training_phase(data_dir: str, model_dir: str, device: str):
     """
     Trains the model for a number of epochs, and saves it.
@@ -154,14 +65,14 @@ def training_phase(data_dir: str, model_dir: str, device: str):
     logging.info("\n***Training***")
     for epoch in range(epochs):
         logging.info("\nEpoch %d\n-------------------------------", epoch + 1)
-        (train_loss, train_accuracy) = _fit(device, train_dataloader, model,
-                                            loss_fn, optimizer)
+        (train_loss, train_accuracy) = fit(device, train_dataloader, model,
+                                           loss_fn, optimizer)
         logging.info("Train loss: %8f, train accuracy: %0.1f%%", train_loss,
                      train_accuracy * 100)
 
     logging.info("\n***Evaluating***")
-    (test_loss, test_accuracy) = _evaluate(device, test_dataloader, model,
-                                           loss_fn)
+    (test_loss, test_accuracy) = evaluate(device, test_dataloader, model,
+                                          loss_fn)
     logging.info("Test loss: %8f, test accuracy: %0.1f%%", test_loss,
                  test_accuracy * 100)
 
