@@ -4,6 +4,7 @@ import argparse
 import logging
 from pathlib import Path
 from typing import Tuple
+from tqdm import tqdm
 
 import torch
 from torch import nn
@@ -58,14 +59,10 @@ def _fit(device: str, dataloader: DataLoader, model: nn.Module,
     correct_item_count = 0
     item_count = 0
 
-    # Used for printing only.
-    batch_count = len(dataloader)
-    print_every = 100
-
     model.to(device)
     model.train()
 
-    for batch_index, (x, y) in enumerate(dataloader):
+    for (x, y) in tqdm(dataloader):
         x = x.float().to(device)
         y = y.long().to(device)
 
@@ -74,15 +71,6 @@ def _fit(device: str, dataloader: DataLoader, model: nn.Module,
         correct_item_count += (y_prime.argmax(1) == y).sum().item()
         loss_sum += loss.item()
         item_count += len(x)
-
-        # Printing progress.
-        if ((batch_index + 1) % print_every == 0) or ((batch_index + 1)
-                                                      == batch_count):
-            accuracy = correct_item_count / item_count
-            average_loss = loss_sum / item_count
-            print(f"[Batch {batch_index + 1:>3d} - {item_count:>5d} items] " +
-                  f"loss: {average_loss:>7f}, " +
-                  f"accuracy: {accuracy*100:>0.1f}%")
 
     average_loss = loss_sum / item_count
     accuracy = correct_item_count / item_count
@@ -165,17 +153,17 @@ def training_phase(data_dir: str, model_dir: str, device: str):
 
     logging.info("\n***Training***")
     for epoch in range(epochs):
-        logging.info(f"\nEpoch {epoch + 1}\n-------------------------------")
+        logging.info("\nEpoch %d\n-------------------------------", epoch + 1)
         (train_loss, train_accuracy) = _fit(device, train_dataloader, model,
                                             loss_fn, optimizer)
-        logging.info(f"Train loss: {train_loss:>8f}, " +
-                     f"train accuracy: {train_accuracy * 100:>0.1f}%")
+        logging.info("Train loss: %8f, train accuracy: %0.1f%%", train_loss,
+                     train_accuracy * 100)
 
     logging.info("\n***Evaluating***")
     (test_loss, test_accuracy) = _evaluate(device, test_dataloader, model,
                                            loss_fn)
-    logging.info(f"Test loss: {test_loss:>8f}, " +
-                 f"test accuracy: {test_accuracy * 100:>0.1f}%")
+    logging.info("Test loss: %8f, test accuracy: %0.1f%%", test_loss,
+                 test_accuracy * 100)
 
     _save_model(model_dir, model)
 
