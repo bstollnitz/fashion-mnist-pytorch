@@ -28,9 +28,9 @@ labels_map = {
     9: 'Ankle Boot',
 }
 
-DATA_DIRPATH = 'fashion-mnist-pytorch/local/data'
-MODEL_DIRPATH = 'fashion-mnist-pytorch/local/model'
-IMAGE_FILEPATH = 'fashion-mnist-pytorch/local/src/predict-image.png'
+DATA_DIRPATH = 'fashion-mnist-pytorch/data'
+MODEL_DIRPATH = 'fashion-mnist-pytorch/model'
+IMAGE_FILEPATH = 'fashion-mnist-pytorch/src/predict-image.png'
 
 
 def _get_data(batch_size: int) -> Tuple[DataLoader, DataLoader]:
